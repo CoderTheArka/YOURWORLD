@@ -1,0 +1,101 @@
+set(ref(database, 'users/' + username + '/'), {
+    username: username,
+    email: email,
+    password : password,
+
+  }).then(() => {
+  alert('SUCCESFULL NOW YOU CAN SIGN IN.');
+
+})
+.catch((error) => {
+  alert(error);
+});
+
+var ImgToUpload = files[0];
+var ImgName = localStorage.getItem('name') + localStorage.getItem('ext');
+const storage = getStorage();
+
+console.log(image);
+const storageRef = REF(storage, 'Images/'+ImgName);
+
+const uploadTask = uploadBytesResumable(storageRef, ImgToUpload);
+uploadTask.on('state_changed', 
+  (snapshot) => {
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case 'paused':
+        alert('Something Error Happened');
+
+      case 'running':
+      alert('Upload is running');
+
+    }
+  }, 
+  (error) => {
+    alert(error);
+  }, 
+  () => {
+    alert('Image Upload');
+    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      console.log('File available at', downloadURL);
+      saveURL(downloadURL);
+      var imglink = downloadURL;
+    
+
+      async function saveURL(url){
+        var ref = doc(clouddb,"ImageLinks/" + username)
+
+        await setDoc(ref,{
+          ImageName : ImgName,
+          ImageURL : url
+        });
+      }
+
+    });
+  }
+);
+
+    var ImgToUpload = files[0];
+var ImgName = localStorage.getItem('name') + localStorage.getItem('ext');
+const storage = getStorage();
+
+const storageRef = REF(storage, 'Images/'+ImgName);
+
+const uploadTask = uploadBytesResumable(storageRef, ImgToUpload);
+uploadTask.on('state_changed', 
+  (snapshot) => {
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case 'paused':
+        alert('Something Error Happened');
+
+      case 'running':
+      alert('Upload is running');
+
+    }
+  }, 
+  (error) => {
+    alert(error);
+  }, 
+  () => {
+    alert('Image Upload');
+    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      console.log('File available at', downloadURL);
+      saveURL(downloadURL);
+      var imglink = downloadURL;
+    
+
+      async function saveURL(url){
+        var ref = doc(clouddb,"ImageLinks/" + username)
+
+        await setDoc(ref,{
+          ImageName : ImgName,
+          ImageURL : url
+        });
+      }
+
+    });
+  }
+);

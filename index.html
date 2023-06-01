@@ -1,0 +1,240 @@
+<html>
+    <head>
+        <title>YOUR WORLD</title>
+        <link rel="stylesheet" href="registration_page.css">
+        <script src="https://smtpjs.com/v3/smtp.js">
+        </script>
+        <script src="ff.js"></script>
+        <link rel="icon" href="download.jpg">
+
+    </head>
+    <body>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+        crossorigin="anonymous">
+    
+    <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <form onsubmit="fun()">
+                    <h1>Create Account</h1>
+                    <div class="social-container">
+                    </div>
+                    <input required id="image" name="image" class="file-upload-input" type="file" accept="Image"/>
+                    <input required id="username" type="text" placeholder="Name" />
+                    <input required id="email" type="email" placeholder="Email" />
+                    <input required id="password" type="password" placeholder="Password" />
+                    <button id="sign_up">Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form onsubmit="fun()">
+                    <h1>Sign in</h1>
+                    <div class="social-container">
+                    </div>
+                    <input id="username1" type="name" placeholder="Name"/>
+                    <input id="email1" type="email1" placeholder="Email" />
+                    <input id="password10" type="password" placeholder="Password" />
+                    <button id="signup_submit1">Sign In</button>
+                    <a href="forget.html">Forget Password ?</a>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p>To keep connected with us please login with your personal info</p>
+                        <button class="ghost" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Enter your personal details and start journey with us</p>
+                        <button class="ghost" id="signUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <div class="footer">
+    <b>	Follow me on </b>
+        <div class="icons">
+            <a href="https://github.com/kvaibhav01" target="_blank" class="social"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/vaibhavkhulbe143/" target="_blank" class="social"><i class="fab fa-instagram"></i></a>
+            <a href="https://medium.com/@vaibhavkhulbe" target="_blank" class="social"><i class="fab fa-medium"></i></a>
+            <a href="https://twitter.com/vaibhav_khulbe" target="_blank" class="social"><i class="fab fa-twitter-square"></i></a>
+            <a href="https://linkedin.com/in/vaibhav-khulbe/" target="_blank" class="social"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </body>
+    <script type="module">
+  // https://firebase.google.com/docs/web/setup#available-libraries
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+  import {  getDatabase, ref, set, onValue  } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+  import { getStorage, ref as REF, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js";
+  import { getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+  apiKey: "AIzaSyBQ7uPLr9i23Vva0yBzz3YQ4cgIywRRNmA",
+  authDomain: "registration-310c5.firebaseapp.com",
+  projectId: "registration-310c5",
+  storageBucket: "registration-310c5.appspot.com",
+  messagingSenderId: "98589376762",
+  appId: "1:98589376762:web:a8eab52be264c69c020943"
+};
+
+const app = initializeApp(firebaseConfig);
+  const database = getDatabase();
+  const clouddb = getFirestore();
+  // Initialize Firebase
+  const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+signUpButton.addEventListener('click', () =>
+container.classList.add('right-panel-active'));
+
+signInButton.addEventListener('click', () =>
+container.classList.remove('right-panel-active'));
+
+var files = [];
+
+  document.getElementById('image').onchange = e =>{
+     files = e.target.files;
+     localStorage.setItem('pcc' , files);
+
+     var ext = GetFileExt(files[0]);
+     var name = GetFileName(files[0]);
+     localStorage.setItem('ext',ext);
+     localStorage.setItem('name',name)
+     console.log(localStorage.getItem('name') + localStorage.getItem('ext'));
+  }
+  function GetFileExt(file){
+   var temp = file.name.split(".");
+   var ext = temp.slice(temp.lenght-1,temp.lenght);
+   return '.' + ext[1];
+  }
+
+  function GetFileName(file){
+    var temp = file.name.split('.');
+    var fname = temp.slice(0,-1).join('.');
+    return fname;
+  }
+  sign_up.addEventListener('click' , (e)=>{
+
+    var ImgToUpload = files[0];
+var ImgName = localStorage.getItem('name') + localStorage.getItem('ext');
+const storage = getStorage();
+
+const storageRef = REF(storage, 'Images/'+ImgName);
+
+const uploadTask = uploadBytesResumable(storageRef, ImgToUpload);
+uploadTask.on('state_changed', 
+  (snapshot) => {
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case 'paused':
+        alert('Something Error Happened');
+
+      case 'running':
+      alert('Upload is running');
+
+    }
+  }, 
+  (error) => {
+    alert(error);
+  }, 
+  () => {
+    alert('Image Upload');
+    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      console.log('File available at', downloadURL);
+      saveURL(downloadURL);
+      var imglink = downloadURL;
+    
+
+      async function saveURL(url){
+        var ref = doc(clouddb,"ImageLinks/" + username)
+
+        await setDoc(ref,{
+          ImageName : ImgName,
+          ImageURL : url
+        });
+      }
+
+    });
+  }
+);
+
+var email = document.getElementById('email').value;
+  var password = document.getElementById('password').value;
+  var username = document.getElementById('username').value;
+
+if(username != '' & email != '' & password!= ''){
+
+  var email = document.getElementById('email').value;
+  var password = document.getElementById('password').value;
+  var username = document.getElementById('username').value;
+
+  var val = Math.floor(1000 + Math.random() * 9000);
+  console.log(val);
+
+  localStorage.setItem('login_email' , email);
+  localStorage.setItem('login_password' , password);
+  localStorage.setItem('login_username' , username);
+  localStorage.setItem('OTP' , val);
+
+
+
+    Email.send({
+    Host : "smtp.elasticemail.com",
+    Username : "arkabhattacharyac42@gmail.com",
+    Password : "0E01EAE52949065802D27BF1723C1F1FCA91",
+    To : email,
+    From : "arkabhattacharyac42@gmail.com",
+    Subject : "OTP FOR YOUR WORLD IS:",
+    Body : "YOUR OTP IS "+val+""
+}).then(
+  
+  message => alert(message)
+
+);
+alert('OTP WILL BE SEND TO THE GIVEN EMAIL');
+
+alert('SENDED')
+
+
+setTimeout(() => {window.location = 'otp.html'; }, 5000)
+}else{
+  alert('YOU CAN LET A STRING EMPTY')
+}
+
+
+});
+
+
+signup_submit1.addEventListener('click',(e)=>{
+const starCountRef = ref(database, 'users/' + document.getElementById('username1').value + '/');
+onValue(starCountRef, (snapshot) =>{
+  const data = snapshot.val();
+ var get_email = data.email;
+ var get_password = data.password;
+ var get_username = data.username;
+
+ if (data.email == document.getElementById('email1').value){
+  if(data.password == document.getElementById('password10').value){
+  localStorage.setItem('username',document.getElementById('username1').value);
+  alert('SIGN IN SUCCESFULL');
+ window.location = 'main.html';
+   }else{
+    alert('INVALID EMAIL USERNAME AND PASSWORD CHECK AND TRY AGAIN.');
+   }
+}else{
+  alert('INVALID EMAIL USERNAME AND PASSWORD CHECK AND TRY AGAIN.');
+}
+});
+
+
+
+});
+
+    </script>
+</html>

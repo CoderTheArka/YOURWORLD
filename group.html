@@ -1,0 +1,85 @@
+<html>
+    <head>
+  <title>YOUR WORLD</title>
+  <link rel="stylesheet" href="group.css">
+  <link rel="icon" href="download.jpg">
+  <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+  <script src="group.js"></script>
+    </head>
+    <body>
+        <div class="div1">
+            <img id="userImage" name="userImage"  src="male-gde53842cd_640.png" height="150px" width="170px">
+           <div> <label class='text'>Name: </label>
+            <label id="abckjkj" name="abc" type="text" name="text" placeholder=""></label><br>
+            <label id="abckjkj" class="dd" name="abc" type="text" name="text" placeholder=""></label><br>
+          </div>
+          </div><br><br>
+          <center>
+            <label id="note">NOTE: YOU CAN MAKE GROUP ROOMS TO CHAT AND YOU CAN MAKE MORE THAN 100 GROUP ROOM</label>
+          <div class="form-control input_div_room_page">
+    
+            <label id="dbd">#Add Group Room:</label>
+              <input id="kjkj" class="form-control" placeholder="Room Name" type="text">
+          </div>
+          <button id="nbgn" onclick="addGroupRoom()" class="btn btn-success">#Add Group Room</button>
+          <h3 id="abcdf" class="color_white">#GROUPS YOU ARE CURRENTLY IN:</h3>
+            <div id="sender" class="output"></div><br><br>
+            </center>
+          </body>
+          <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+      import {  getDatabase, ref as Ref, set, onValue,onChildAdded  } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+      import { getStorage, ref as REF, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js";
+      import { getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+      
+    
+     
+      
+    
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      const firebaseConfig = {
+        apiKey: "AIzaSyBQ7uPLr9i23Vva0yBzz3YQ4cgIywRRNmA",
+        authDomain: "registration-310c5.firebaseapp.com",
+        databaseURL: "https://registration-310c5-default-rtdb.firebaseio.com",
+        projectId: "registration-310c5",
+        storageBucket: "registration-310c5.appspot.com",
+        messagingSenderId: "98589376762",
+        appId: "1:98589376762:web:a8eab52be264c69c020943"
+      };
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+      const clouddb = getFirestore();
+    
+      var username = localStorage.getItem('username');
+     const starCountRef = Ref(database, 'users/' + username);
+    onValue(starCountRef, (snapshot) =>{
+      const data = snapshot.val();
+     document.getElementById('abckjkj').innerHTML = data.username;
+    });
+     
+      var ref = doc(clouddb,"ImageLinks/" + username);
+    
+      const docSnap = await getDoc(ref);
+      if(docSnap.exists()){
+     userImage.src = docSnap.data().ImageURL;
+    
+      }
+      
+    
+      var ubsd = localStorage.getItem('username');
+     console.log(ubsd);
+      const starCountRef1 = Ref(database, 'users/' + ubsd);
+    onValue(starCountRef1, (snapshot) =>{
+      const data = snapshot.val();
+      var emaildd = data.email;
+      console.log(emaildd);
+      localStorage.setItem('email',data.email);
+    });
+    </script>
+</html>

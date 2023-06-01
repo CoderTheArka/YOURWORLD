@@ -1,0 +1,129 @@
+<html>
+<head>
+    <title>YOUR WORLD</title>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="icon" href="download.jpg">
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="otp.css">
+      
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+
+    <script src="otp.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-4 text-center">
+              <div class="row">
+                <div class="col-sm-12 mt-5 bgWhite">
+                  <label>NOTE: FOR SOME ISSUE THE OTP WILL BE GOING TO THE SPAM SECTION IN YOUR GMAIL CHECK IT.</label>
+                  <div class="title">
+                    Verify OTP
+                  </div>
+                  
+                  <form action="" class="mt-5">
+                    <input id="1" class="otp" type="text" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1 >
+                    <input id="2" class="otp" type="text" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1 >
+                    <input id="3" class="otp" type="text" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 >
+                    <input id="4" class="otp" type="text" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1 >
+                  </form>
+                  <hr class="mt-4">
+                  <button id="verify" class='btn btn-primary btn-block mt-4 mb-4 customBtn'>Verify</button>
+                  <a href="index.html">I AM ALREADY THE MEMBER</a>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+</body>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+  import {  getDatabase, ref, set, onValue  } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+  import { getStorage, ref as REF, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js";
+  import { getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+  apiKey: "AIzaSyBQ7uPLr9i23Vva0yBzz3YQ4cgIywRRNmA",
+  authDomain: "registration-310c5.firebaseapp.com",
+  projectId: "registration-310c5",
+  storageBucket: "registration-310c5.appspot.com",
+  messagingSenderId: "98589376762",
+  appId: "1:98589376762:web:a8eab52be264c69c020943"
+};
+
+const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const clouddb = getFirestore(app);
+
+  var num1 = localStorage.getItem('OTP');
+var num1_lenght = num1.toString().length;
+
+verify.addEventListener('click' , (e)=>{
+  var num1 = localStorage.getItem('OTP');
+
+let absNum = Math.abs(num1);
+    // 2: reduce number to single digit
+    while (absNum >= 10) {
+        absNum /= 10;
+    }
+    // 3: get integer part of fraction
+    absNum = Math.trunc(absNum);
+
+    const id = num1;
+   const secondDigit = String(id).charAt(1);
+   const secondDigit1 = String(id).charAt(2);
+   const secondDigit12 = String(id).charAt(3);
+
+ if (document.getElementById('1').value == absNum){
+  if (document.getElementById('2').value == secondDigit){
+    if (document.getElementById('3').value == secondDigit1){
+      if (document.getElementById('4').value == secondDigit12){
+     alert('OTP SUCCESFULL');
+    var username = localStorage.getItem('login_username');
+    var password = localStorage.getItem('login_password');
+    var email = localStorage.getItem('login_email');
+
+    
+    set(ref(database, 'users/' + username + '/'), {
+    username: username,
+    email: email,
+    password : password,
+
+  }).then(() => {
+  alert('SUCCESFULL NOW YOU CAN SIGN IN.');
+  setTimeout(() => {window.location = 'index.html'; }, 5000)
+})
+.catch((error) => {
+  alert(error);
+});
+
+
+
+
+
+}else{
+      alert('OTP WAS INCORRECT TRY AGAIN');
+
+    }
+   }else{
+      alert('OTP WAS INCORRECT TRY AGAIN');
+    }
+  }else{
+      alert('OTP WAS INCORRECT TRY AGAIN');
+    }
+ }else{
+      alert('OTP WAS INCORRECT TRY AGAIN');
+
+    }
+
+});
+</script>
+</html>

@@ -1,0 +1,147 @@
+<html>
+    <head>
+  <title>YOUR WORLD</title>
+  <link rel="stylesheet" href="main.css">
+
+  <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+  <script src="main.js"></script>
+  <link rel="icon" href="download.jpg">
+
+    </head>
+    <body id="bodya" onmousemove="ffs()">
+  
+        
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome File -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="image">
+      <img id="user_image" src="" alt="IMAGE NOT AVAILABLE">
+    </div>
+    <div class="text1123">
+      <p id="name" class="side">NAME IS NOT AVAILABLE.</p>
+      <p id="email" class="side">EMAIL IS NOT AVAILABLE</p>
+    </div>
+    
+  </div><br>
+  <div class="container">
+    <a href="group.html"><img id="group" class="group" src="multiple-users-silhouette.png"></a>
+
+  </div>
+      <p id="note">NOTE: YOU CAN ONLY SEARCH USER THAT YOU KNOW BECAUSE ITS YOUR WORLD AND ITS YOUR PRIVACY NO ONE CAN DISTURB YOU.</p>
+      <p id="note">CLICK ENTER TO SEARCH</p>
+
+      <input id="search" placeholder="SEARCH FOR USER" ><br><br><br>
+      <div id="gg">
+        <div id='bhbh' class='image'>
+        <img id='srcgg' >
+        
+        </div>
+        <span class="text">
+          <p id='emailofother'></p>
+          <p id='emailofother'></p>
+        </span>
+        </div>
+
+
+
+      
+    </body>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+  import {  getDatabase, ref, set, onValue  } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+  import { getStorage, ref as REF, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js";
+  import { getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+  apiKey: "AIzaSyBQ7uPLr9i23Vva0yBzz3YQ4cgIywRRNmA",
+  authDomain: "registration-310c5.firebaseapp.com",
+  projectId: "registration-310c5",
+  storageBucket: "registration-310c5.appspot.com",
+  messagingSenderId: "98589376762",
+  appId: "1:98589376762:web:a8eab52be264c69c020943"
+};
+
+const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const clouddb = getFirestore(app);
+
+  var username = localStorage.getItem('username');
+ const starCountRef = ref(database, 'users/' + username + '/');
+onValue(starCountRef, (snapshot) =>{
+  const data = snapshot.val();
+ document.getElementById('name').innerHTML = data.username;
+document.getElementById('email').innerHTML = data.email;
+});
+ 
+  var ref1 = doc(clouddb,"ImageLinks/" + username);
+
+  const docSnap = await getDoc(ref1);
+  if(docSnap.exists()){
+ document.getElementById('user_image').src = docSnap.data().ImageURL;
+  }  
+bodya.addEventListener('move' , (e)=>{
+
+async function moves(){
+  var ref2 = doc(clouddb,"ImageLinks/" + document.getElementsByClassName('text').value);
+
+const docSnap = await getDoc(ref2);
+if(docSnap.exists()){
+document.getElementById('srcgg').src = docSnap.data().ImageURL;
+}  
+moves();
+}
+
+});
+
+
+
+  document.getElementById("search").addEventListener( "keydown", function( e ) {
+    var keyCode = e.keyCode || e.which;
+    if ( keyCode === 13 ) {
+   var get_username = document.getElementById('search').value;
+  console.log(get_username);
+
+if(get_username.innerHTML == username.value){
+  const starCountRef = ref(database, 'users/' + get_username + '/');
+onValue(starCountRef, (snapshot) =>{
+  const data = snapshot.val();
+ if (get_username = data.username){
+alert('FOUND');
+var get_username2 = data.username;
+ var get_email = data.email;
+ set(ref(database, 'Searched/' + username + '/' + get_username), {
+    username: get_username,
+
+
+  }).then(() => {
+  alert('SEARCHED SUCCESFULL');
+
+})
+.catch((error) => {
+  alert(error);
+});
+
+ }else{
+ alert('USER IS NOT IN OUR DATA. CHECK IT AND TRY AGAIN.');
+ }
+});
+}else{
+  alert('YOU CANT SEARCH YOU NAME.');
+}
+  
+
+    }
+}, false);
+
+    </script>
+</html>

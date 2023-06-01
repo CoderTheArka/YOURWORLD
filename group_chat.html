@@ -1,0 +1,142 @@
+<html>
+<head>
+    <title>YOUR WORLD</title>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+   <link rel="icon" href="download.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="group_chat.css">
+      
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+    <script src="group_chat.js"></script>
+
+</head>
+<body class="bg-funky">
+<div class="container">
+      <div class="text1123">
+        <p id="name" class="side"> YOU ARE CURRENTLY USING ROOM NAME :-</p>
+        <p id="email" class="side"></p>
+        <p>------------------------------------------</p>
+      </div>
+    </div><br><br>
+    <div class="addPeople" style="display: none;" id="addf">
+   <input placeholder="Username" id="username" class="form-control">
+   <button onclick="add2121()" id="add" >Add People</button>
+   <label style="display: none;" id='hide'></label>
+    </div>
+    <div id="ssss">
+      <img onclick="seek()" id="df" src="multiple-users-silhouette.png"><br>
+      
+    </div><br>
+    <div id="result" style="display: none;"></div><br>
+    <div id="remove" class="addPeople">
+      <input placeholder="Want To Remove" id="username1" class="form-control">
+      <button onclick="remove()" id="add1">Remove</button>
+      <label style="display: none;" id='hide'></label>
+      <label style="display: none;" id='hide1'></label>
+       </div><br><br>
+<div class="messaging">
+      <div class="inbox_msg">
+
+        <div class="mesgs">
+          <div id="output" class="msg_history">
+            <div class="incoming_msg">
+              
+          </div>
+
+        </div>
+      </div>
+    
+  </div><br>
+  <div class="message_box">
+    <textarea id="message" placeholder="WRITE YOUR MESSAGE"></textarea>
+  </div>
+<div class="send">
+  <img onclick="send()" src="email.png" id="send">
+</div>
+  <div id="hide1" style="display: none;"></div>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.js">
+
+  </script>
+    <script>
+   $('#message').emojioneArea({
+  pickerPosition:'top'
+   });
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+  import {  getDatabase, ref, set, onValue  } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+  import { getStorage, ref as REF, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js";
+  import { getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+  apiKey: "AIzaSyBQ7uPLr9i23Vva0yBzz3YQ4cgIywRRNmA",
+  authDomain: "registration-310c5.firebaseapp.com",
+  projectId: "registration-310c5",
+  storageBucket: "registration-310c5.appspot.com",
+  messagingSenderId: "98589376762",
+  appId: "1:98589376762:web:a8eab52be264c69c020943"
+};
+
+const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const clouddb = getFirestore(app);
+
+
+async function he(){
+    document.getElementById('email').innerHTML ="#"+ localStorage.getItem('GROUP_ROOM_NAME');
+
+  }
+
+  async function ddd(){
+var ref = doc(clouddb,"ImageLinks/" + localStorage.getItem('User'));
+
+const docSnap = await getDoc(ref);
+ if(docSnap.exists()){
+localStorage.setItem('picture' , docSnap.data().ImageURL);
+ }
+}
+add.addEventListener('click' , (e)=>{
+ const starCountRef = ref(database, 'users/' + document.getElementById('username').value + '/');
+onValue(starCountRef, (snapshot) =>{
+  const data = snapshot.val();
+if(data.username == document.getElementById('username').value){
+  document.getElementById('hide').innerHTML = 'ok';
+  alert('OK');
+}else{
+  document.getElementById('hide').innerHTML = 'no';
+}
+alert('NOTE: IF THE USER IS NOT IN YOUR DATA THEN IT WILL NOT BE SAVE.');
+});
+});
+ddd();
+
+
+
+
+  he();
+  add1.addEventListener('click' , (e)=>{
+ const starCountRef = ref(database, 'users/' + document.getElementById('username1').value + '/');
+onValue(starCountRef, (snapshot) =>{
+  const data = snapshot.val();
+if(data.username == document.getElementById('username1').value){
+  document.getElementById('hide1').innerHTML = 'ok';
+  alert('OK');
+}else{
+  document.getElementById('hide1').innerHTML = 'no';
+}
+alert('NOTE: IF THE USER IS NOT IN YOUR DATA THEN IT WILL NOT BE SAVE.');
+});
+});
+ </script>
+</html>

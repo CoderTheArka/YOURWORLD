@@ -1,0 +1,78 @@
+body{
+    background-color: green;
+    text-align: center;
+  }
+  #userImage{
+    border-radius: 50%;
+    margin-bottom: 25px;
+    background-color: red;
+  
+  }
+  .text{
+    font-size: 40px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-right: 20px;
+    color:black;
+  }
+  #logout
+  {
+      font-size: 20px; float: right;
+      font-size: 40px;
+      background-color: red;
+      
+  }
+  .room_name
+  {
+      cursor: pointer;
+      font-size: 20px;
+  }
+  
+  
+  #logout
+  {
+      font-size: 20px; float: right;
+  }
+  #abckjkj{
+    font-size: 35px;
+    border-radius: 15px;
+    text-align: center;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    width: 500px;
+  }
+  .div1{
+    text-align: center;
+    height:auto;
+    width:100%;
+    background-color: greenyellow;
+    margin-bottom: 30px;
+  }
+  #dbd{
+    font-size: 40px;
+  
+  }
+  #kjkj{
+    width: 65%;
+    font-size: 35px;
+  border-color: brown;
+  margin-bottom: 20px;
+  }
+  #abcdf{
+    font-size: 30px;
+  }
+  .output{
+    background-color: gray;
+  }
+  #nbgn{
+    font-size: 25px;
+    border-radius: 20%;
+    border-color: blue;
+  }
+  #note{
+    color: blue;
+    font-size: 20px;
+  }
+  .room_name{
+    font-size: 30px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  
+  }

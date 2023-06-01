@@ -1,0 +1,133 @@
+<html>
+<head>
+    <title>YOUR WORLD</title>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="forgot.css">
+      
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+
+    <script src="forgot.js"></script>
+
+</head>
+<body>
+
+          <div class="container-center">
+            <center>
+
+              </center>
+          <h2>Don't Worry!</h2>
+          
+            <h4 id="hh">
+              Just provide your email<br> 
+              and we can do the rest
+            </h4>
+            <formgroup>
+              <input id="email" type="text" name="email"/>
+              <input placeholder="OTP" id="password" name="password" style="display: none;"/>
+              <label for="email"><br>Email</label>
+            </formgroup>
+            
+          
+            <button id="login-btn">Next</button><br><br>
+            <button id="sign-btn" style="display: none;">VERIFY</button>
+          
+           
+            
+          
+           
+          <p>Did you remember? <a href="index.html">Sign In</a></p>
+          <p style="display: none;" id="resend">RESEND OTP</p>
+        </div>
+
+        
+        
+    </body>
+    <script type="module">
+
+document.getElementById('login-btn').addEventListener('click' , (e)=>{
+    var val = Math.floor(1000 + Math.random() * 9000);
+ var email = document.getElementById('email').value ;
+localStorage.setItem('new_email' , email);
+localStorage.setItem('OPT55551',val);
+ Email.send({
+    Host : "smtp.elasticemail.com",
+    Username : "arkabhattacharyac42@gmail.com",
+    Password : "0E01EAE52949065802D27BF1723C1F1FCA91",
+    To : email,
+    From : "arkabhattacharyac42@gmail.com",
+    Subject : "OTP FOR NEW PASSWORD IS:",
+    Body : "YOUR OTP IS "+val+""
+}).then(
+  
+  message => alert(message)
+
+);
+alert('OTP WILL BE SEND TO THE GIVEN EMAIL');
+
+alert('SENDED')
+
+
+setTimeout(() => {
+document.getElementById('password').style.display = 'block'; 
+document.getElementById('sign-btn').style.display = 'block';
+document.getElementById('login-btn').style.display = 'none';
+document.getElementById('email').style.display = 'none';
+document.getElementById('resend').style.display = 'block';
+
+document.getElementById('hh').innerHTML = 'NOTE: OTP WILL BE AT SPAM SECTION ON YOUR GMAIL.'
+}, 5000)
+});
+document.getElementById('sign-btn').addEventListener('click' , (e)=>{
+var otp = localStorage.getItem('OPT55551');
+var get = document.getElementById('password').value
+if(get != otp){
+    alert('INVALID TRY AGAIN');
+}else{
+
+alert('SUCCESFULL REDIRECTING TO NEW PAGE');
+localStorage.setItem('forgot_email' , document.getElementById('email').value);
+setTimeout(() => {window.location = 'resetpassword.html'; }, 5000)
+}
+});
+document.getElementById('resend').addEventListener('click' , (e)=>{
+    var val = Math.floor(1000 + Math.random() * 9000);
+ var email = document.getElementById('email').value ;
+localStorage.setItem('new_email' , email);
+localStorage.setItem('OPT55551',val);
+ Email.send({
+    Host : "smtp.elasticemail.com",
+    Username : "arkabhattacharyac42@gmail.com",
+    Password : "0E01EAE52949065802D27BF1723C1F1FCA91",
+    To : email,
+    From : "arkabhattacharyac42@gmail.com",
+    Subject : "OTP FOR NEW PASSWORD IS:",
+    Body : "YOUR OTP IS "+val+""
+}).then(
+  
+  message => alert(message)
+
+);
+alert('OTP WILL BE SEND TO THE GIVEN EMAIL');
+
+alert('SENDED')
+
+
+setTimeout(() => {
+document.getElementById('password').style.display = 'block'; 
+document.getElementById('sign-btn').style.display = 'block';
+document.getElementById('login-btn').style.display = 'none';
+document.getElementById('email').style.display = 'none';
+
+document.getElementById('hh').innerHTML = 'NOTE: OTP WILL BE AT SPAM SECTION ON YOUR GMAIL.'
+}, 5000)
+});
+    </script>
+    </html>
